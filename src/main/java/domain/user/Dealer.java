@@ -18,4 +18,12 @@ public class Dealer {
     }
 
     // TODO 추가 기능 구현
+
+
+    @Override
+    public String toString() {
+        return "Dealer{" +
+                "cards=" + cards +
+                '}';
+    }
 }
