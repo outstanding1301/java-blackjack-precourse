@@ -14,6 +14,8 @@ public class Player {
     private final double bettingMoney;
     private final List<Card> cards = new ArrayList<>();
 
+    private State state = State.HIT;
+
     public Player(String name, double bettingMoney) {
         this.name = name;
         this.bettingMoney = bettingMoney;
@@ -33,6 +35,14 @@ public class Player {
         }
 
         return sum;
+    }
+
+    public void hit() {
+        this.state = State.HIT;
+    }
+
+    public void stand() {
+        this.state = State.STAND;
     }
 
     // TODO 추가 기능 구현
