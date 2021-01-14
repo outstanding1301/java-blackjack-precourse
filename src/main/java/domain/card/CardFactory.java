@@ -24,8 +24,8 @@ public class CardFactory {
         }
     }
 
-    public static List<Card> getShuffled(List<Card> cards) {
-        List<Card> shuffled =  new ArrayList<>(cards);
+    public static List<Card> getShuffled() {
+        List<Card> shuffled =  new ArrayList<>(create());
         Collections.shuffle(shuffled);
         return shuffled;
     }
