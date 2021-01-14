@@ -5,6 +5,7 @@ import domain.card.Symbol;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 게임 참여자를 의미하는 객체
@@ -45,7 +46,28 @@ public class Player {
         this.state = State.STAND;
     }
 
-    // TODO 추가 기능 구현
+    public State getState() {
+        return state;
+    }
+
+    public void checkScore() {
+        if (getScore() == 21) {
+            printHand();
+            System.out.println("BLACKJACK!!");
+            stand();
+            return;
+        }
+        if (getScore() > 21) {
+            printHand();
+            System.out.println("BURST!!");
+            stand();
+        }
+    }
+
+    public void printHand() {
+        String hand = cards.stream().map(c -> c.getCardString()).collect(Collectors.joining(" | "));
+        System.out.println(name+"님의 손패(합:"+getScore()+") : "+hand);
+    }
 
     @Override
     public String toString() {
