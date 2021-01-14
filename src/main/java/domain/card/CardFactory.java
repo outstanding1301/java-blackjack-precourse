@@ -23,4 +23,10 @@ public class CardFactory {
             cards.add(new Card(symbol, type));
         }
     }
+
+    public static List<Card> getShuffled(List<Card> cards) {
+        List<Card> shuffled =  new ArrayList<>(cards);
+        Collections.shuffle(shuffled);
+        return shuffled;
+    }
 }
