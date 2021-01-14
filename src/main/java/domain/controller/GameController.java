@@ -1,10 +1,10 @@
 package domain.controller;
 
-import domain.card.Card;
 import domain.card.CardFactory;
 import domain.card.Deck;
 import domain.user.Dealer;
 import domain.user.Player;
+import domain.user.State;
 
 import java.util.List;
 
@@ -12,25 +12,42 @@ public class GameController {
     private List<Player> players;
     private Dealer dealer;
     private Deck deck;
+    private InputManager input;
 
-    public GameController(List<Player> players) {
+    public GameController(List<Player> players, InputManager input) {
         this.players = players;
         this.dealer = new Dealer();
         this.deck = new Deck(CardFactory.getShuffled());
+        this.input = input;
     }
 
     public void init() {
+        // 카드 2장 지급
+        dealer.addCard(deck.popCard());
+        dealCard();
         dealCard();
     }
 
-    // 카드 2장씩 지급
+    // 카드 지급
     public void dealCard() {
-        dealer.addCard(deck.popCard());
-        dealer.addCard(deck.popCard());
         for (Player p : players) {
-            p.addCard(deck.popCard());
-            p.addCard(deck.popCard());
+            dealCard(p);
         }
+    }
+    public void dealCard(Player p) {
+        p.addCard(deck.popCard());
+        p.checkScore();
+    }
+
+    public void turn() {
+        players.stream().filter(p -> p.getState() == State.HIT).forEach(player -> {
+            choice(player);
+            dealCard(player);
+        });
+    }
+
+    public void choice(Player player) {
+        while (!input.choiceState(player));
     }
 
     public void printStatus() {
