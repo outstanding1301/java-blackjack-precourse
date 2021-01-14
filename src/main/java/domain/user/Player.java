@@ -1,6 +1,7 @@
 package domain.user;
 
 import domain.card.Card;
+import domain.card.Symbol;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,6 +21,18 @@ public class Player {
 
     public void addCard(Card card) {
         cards.add(card);
+    }
+
+    public int getScore() {
+        int sum = cards.stream().map(c -> c.getSymbol().getScore()).reduce(0, Integer::sum);
+        int aceCount = (int) cards.stream().filter(c -> c.getSymbol() == Symbol.ACE).count();
+
+        while (aceCount > 0 && sum + 10 <= 21) {
+            sum += 10;
+            aceCount--;
+        }
+
+        return sum;
     }
 
     // TODO 추가 기능 구현
